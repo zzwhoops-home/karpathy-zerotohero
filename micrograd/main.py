@@ -44,4 +44,4 @@ if __name__ == "__main__":
     # print(d._prev)
     # print(d._op)
 
-    draw_dot(d)
+    draw_dot(d).render(view=True)
