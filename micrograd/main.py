@@ -5,3 +5,4 @@ if __name__ == "__main__":
     b = Value(-3.0)
     c = Value(10.0)
     d = a * b + c
+    print(d)
