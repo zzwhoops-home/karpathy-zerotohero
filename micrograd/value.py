@@ -1,12 +1,13 @@
 class Value:
-    def __init__(self):
-        pass
+    def __init__(self, data):
+        self.data = data
 
     def __repr__(self):
-        pass
+        return f"Value(data={self.data})"
 
     def __add__(self, other):
-        pass
+        return Value(self.data + other.data)
 
     def __mul__(self, other):
-        pass
+        out = Value(self.data * other.data)
+        return out
