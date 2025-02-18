@@ -20,7 +20,7 @@ def draw_dot(root):
   for n in nodes:
     uid = str(id(n))
     # for any value in the graph, create a rectangular ('record') node for it
-    dot.node(name = uid, label = "{ %s | data %.4f }" % (n.label, n.data), shape='record')
+    dot.node(name = uid, label = "{ %s | data %.4f | grad %.4f }" % (n.label, n.data, n.grad), shape='record')
     if n._op:
       # if this value is a result of some operation, create an op node for it
       dot.node(name = uid + n._op, label = n._op)
@@ -33,15 +33,45 @@ def draw_dot(root):
 
   return dot
 
-if __name__ == "__main__":
+def lol():
+    # small amount h
+    h = 0.001
+
     a = Value(2.0, label='a')
     b = Value(-3.0, label='b')
     c = Value(10.0, label='c')
     # d = a * b + c; d.label = 'd' # creates d with -6, which is passed as child with the value of c to children
     e = a * b; e.label = 'e'
     d = e + c; d.label = 'd'
-    # print(d)
-    # print(d._prev)
-    # print(d._op)
+    f = Value(-2.0, label='f')
+    L = d * f; L.label = 'L'
+    L1 = L.data
 
-    draw_dot(d).render()
+    # added to a
+    a = Value(2.0, label='a')
+    b = Value(-3.0, label='b')
+    c = Value(10.0, label='c')
+    # d = a * b + c; d.label = 'd' # creates d with -6, which is passed as child with the value of c to children
+    e = a * b; e.label = 'e'
+    d = e + c; d.label = 'd'
+    f = Value(-2.0, label='f')
+    L = d * f; L.label = 'L'
+    L2 = L.data + h
+
+    print((L2 - L1) / h)
+
+def draw():
+    a = Value(2.0, label='a')
+    b = Value(-3.0, label='b')
+    c = Value(10.0, label='c')
+    # d = a * b + c; d.label = 'd' # creates d with -6, which is passed as child with the value of c to children
+    e = a * b; e.label = 'e'
+    d = e + c; d.label = 'd'
+    f = Value(-2.0, label='f')
+    L = d * f; L.label = 'L'; L.grad = 1.0
+    draw_dot(L).render()
+
+if __name__ == "__main__":
+    # manual backprop: how much does L change with a small change h?
+    lol()
+    draw()

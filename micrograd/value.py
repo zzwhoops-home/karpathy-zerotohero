@@ -2,6 +2,7 @@ class Value:
     def __init__(self, data, _children=(), _op='', label=''):
         # _children is a tuple when passed in, but maintained as a set (for efficiency?)
         self.data = data
+        self.grad = 0 # by default gradient is 0 because we assume it does not affect loss function
         self._prev = set(_children)
         self._op = _op
         self.label = label
